@@ -1,4 +1,4 @@
-name: build
+name: build-h264-x11
 
 on:
   workflow_dispatch:
