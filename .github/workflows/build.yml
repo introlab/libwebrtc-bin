@@ -9,6 +9,14 @@ on:
       - 'docker/**'
   pull_request:
 
+  workflow_dispatch:
+    inputs:
+      fail_fast:
+        description: "Should stop the workflow as soon as one configuration fails"
+        required: false
+        type: boolean
+        default: false
+
 permissions:
   contents: write
 
