@@ -101,7 +101,6 @@ jobs:
             ext: tar.xz
             type: application/x-xz
     name: Release ${{ matrix.name }}
-    if: contains(github.ref, 'tags/')
     needs:
      - build-linux
      - build-macos
