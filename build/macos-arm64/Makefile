@@ -27,8 +27,7 @@ EXTRA_GN_ARGS := \
 	use_rtti=true \
 	use_custom_libcxx=false \
 	use_custom_libcxx_for_host=false \
-	proprietary_codecs=true \
-	ffmpeg_branding=\"Chrome\"
+	proprietary_codecs=true
 
 .PHONY: all
 all: clean build package
