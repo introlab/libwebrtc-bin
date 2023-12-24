@@ -75,6 +75,9 @@ jobs:
 
   create-release:
     runs-on: ubuntu-latest
+    needs:
+     - build-linux
+     - build-macos
     steps:
       - uses: actions/checkout@v4
       - name: Generate Version Output
@@ -99,6 +102,15 @@ jobs:
             - This is a prerelease, use at your own risks.
           draft: true
           prerelease: true
+      
+      - name: Output Release URL File
+        run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
+      
+      - name: Save Release URL File for publish
+        uses: actions/upload-artifact@v2
+        with:
+          name: release_url
+          path: release_url.txt
 
   release:
     strategy:
@@ -126,11 +138,21 @@ jobs:
     name: Release ${{ matrix.name }}
     needs:
      - create-release
-     - build-linux
-     - build-macos
     runs-on: ubuntu-latest
     steps:
-      - name: Download ${{ matrix.name }}-h264-x11
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: release_url
+
+      - name: Get Upload URL
+        id: get_release_info
+        run: |
+          echo "::set-output name=upload_url::$(cat release_url.txt)"
+          ls -l
+          cat release_url.txt
+          
+      - name: Download ${{ matrix.name }}-h264-x11.${{ matrix.ext }}
         uses: actions/download-artifact@v3
         with:
           name: libwebrtc-${{ matrix.name }}-h264-x11.${{ matrix.ext }}
@@ -146,14 +168,5 @@ jobs:
           asset_name: libwebrtc-${{ matrix.name }}-h264-x11.${{ matrix.ext }}
           asset_content_type: ${{ matrix.type }}
           
-      - name: Upload ${{ matrix.name }} Release asset
-        uses: ncipollo/release-action@v1
-        with:
-          name: Release m${{ github.ref }}
-          allowUpdates: true
-          draft: true
-          prerelease: false
-          artifactContentType: ${{ matrix.type }}
-          artifacts: libwebrtc-${{ matrix.name }}-h264-x11.${{ matrix.ext }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+
   
