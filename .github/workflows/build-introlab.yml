@@ -196,9 +196,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: libwebrtc-${{ matrix.name }}.${{ matrix.ext }}
-        if: matrix.name == 'win-x64' || matrix.name == 'win-x86' || matrix.build-type == 'release'
+        if: (matrix.name == 'win-x64' || matrix.name == 'win-x86') && matrix.build-type == 'release'
           
-      - name: Upload Release ${{ matrix.name }}
+      - name: Upload Release ${{ matrix.name }}-${{ matrix.options }}-${{ matrix.build-type }}.${{ matrix.ext }}
         id: upload-release-asset-h264-x11
         uses: actions/upload-release-asset@v1
         env:
@@ -210,7 +210,7 @@ jobs:
           asset_content_type: ${{ matrix.type }}
         if: matrix.name == 'linux-arm64' || matrix.name == 'linux-x64' || matrix.name == 'macos-arm64' || matrix.name == 'macos-x64'
 
-      - name: Upload Release ${{ matrix.name }}
+      - name: Upload Release ${{ matrix.name }}.${{ matrix.ext }}
         id: upload-release-asset-windows
         uses: actions/upload-release-asset@v1
         env:
@@ -220,7 +220,7 @@ jobs:
           asset_path: libwebrtc-${{ matrix.name }}.${{ matrix.ext }}
           asset_name: libwebrtc-${{ matrix.name }}.${{ matrix.ext }}
           asset_content_type: ${{ matrix.type }}
-        if: matrix.name == 'win-x64' || matrix.name == 'win-x86' || matrix.build-type == 'release'
+        if: (matrix.name == 'win-x64' || matrix.name == 'win-x86') && matrix.build-type == 'release'
           
 
   
