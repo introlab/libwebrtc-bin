@@ -33,8 +33,10 @@ RTC_USE_X11 := rtc_use_x11=false
 endif
 
 ifeq ($(IS_DEBUG),1)
+RTC_IS_DEBUG := is_debug=true
 PACKAGE_NAME += -debug
 else
+RTC_IS_DEBUG := is_debug=false
 PACKAGE_NAME += -release
 endif
 

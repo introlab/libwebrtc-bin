@@ -14,7 +14,7 @@ EXTRA_GN_ARGS := \
 	target_cpu="$(TARGET_CPU)" \
 	enable_stripping=true \
 	enable_dsyms=true \
-	is_debug=$(IS_DEBUG) \
+	$(RTC_IS_DEBUG) \
 	treat_warnings_as_errors=false \
 	$(RTC_USE_H264) \
 	rtc_include_tests=false \
