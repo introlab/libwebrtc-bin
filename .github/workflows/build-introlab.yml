@@ -93,11 +93,12 @@ jobs:
     needs:
      - build-linux
      - build-macos
+     - build-windows
     steps:
       - uses: actions/checkout@v4
       - name: Generate Version Output
         id: generate_version_output
-        run: echo "::set-output name=version::$(cat VERSION | grep WEBRTC_SEMANTIC_VERSION | cut -d '=' -f2 | tr -d '[:space:]')"
+        run: echo "::set-output name=version::$(cat VERSION | grep WEBRTC_SEMANTIC_VERSION | cut -d'=' -f2)"
         shell: bash
 
       - name: Print Version Information
@@ -137,6 +138,8 @@ jobs:
           - linux-x64
           - macos-arm64
           - macos-x64
+          - win-x64
+          - win-x86
         build-type:
           - debug
           - release
@@ -157,6 +160,15 @@ jobs:
             options: h264
             ext: tar.xz
             type: application/x-xz
+          - name: win-x64
+            ext: 7z
+            options:
+            type: application/x-7z-compressed
+          - name: win-x86
+            options:
+            ext: 7z
+            type: application/x-7z-compressed
+
     name: Release ${{ matrix.name }}
     needs:
      - create-release
@@ -180,7 +192,7 @@ jobs:
           name: libwebrtc-${{ matrix.name }}-${{ matrix.options }}-${{ matrix.build-type }}.${{ matrix.ext }}
           
       - name: Upload Release ${{ matrix.name }}
-        id: upload-release-asset
+        id: upload-release-asset-h264-x11
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -189,6 +201,19 @@ jobs:
           asset_path: libwebrtc-${{ matrix.name }}-${{ matrix.options }}-${{ matrix.build-type }}.${{ matrix.ext }}
           asset_name: libwebrtc-${{ matrix.name }}-${{ matrix.options }}-${{ matrix.build-type }}.${{ matrix.ext }}
           asset_content_type: ${{ matrix.type }}
+        if: matrix.name == 'linux-arm64' || matrix.name == 'linux-x64' || matrix.name == 'macos-arm64' || matrix.name == 'macos-x64'
+
+      - name: Upload Release ${{ matrix.name }}
+        id: upload-release-asset-windows
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_release_info.outputs.upload_url }}
+          asset_path: libwebrtc-${{ matrix.name }}.${{ matrix.ext }}
+          asset_name: libwebrtc-${{ matrix.name }}.${{ matrix.ext }}
+          asset_content_type: ${{ matrix.type }}
+        if: matrix.name == 'win-x64' || matrix.name == 'win-x86' || matrix.build-type == 'release'
           
 
   
