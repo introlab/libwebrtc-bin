@@ -138,8 +138,6 @@ jobs:
           - linux-x64
           - macos-arm64
           - macos-x64
-          - win-x64
-          - win-x86
         build-type:
           - debug
           - release
@@ -160,14 +158,7 @@ jobs:
             options: h264
             ext: tar.xz
             type: application/x-xz
-          - name: win-x64
-            ext: 7z
-            options:
-            type: application/x-7z-compressed
-          - name: win-x86
-            options:
-            ext: 7z
-            type: application/x-7z-compressed
+
 
     name: Release ${{ matrix.name }}-${{ matrix.options }}-${{ matrix.build-type }}.${{ matrix.ext }}
     needs:
