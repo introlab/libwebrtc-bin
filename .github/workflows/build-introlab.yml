@@ -190,6 +190,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: libwebrtc-${{ matrix.name }}-${{ matrix.options }}-${{ matrix.build-type }}.${{ matrix.ext }}
+        if: matrix.name == 'linux-arm64' || matrix.name == 'linux-x64' || matrix.name == 'macos-arm64' || matrix.name == 'macos-x64'
+
+      - name: Download ${{ matrix.name }}.${{ matrix.ext }}
+        uses: actions/download-artifact@v3
+        with:
+          name: libwebrtc-${{ matrix.name }}.${{ matrix.ext }}
+        if: matrix.name == 'win-x64' || matrix.name == 'win-x86' || matrix.build-type == 'release'
           
       - name: Upload Release ${{ matrix.name }}
         id: upload-release-asset-h264-x11
