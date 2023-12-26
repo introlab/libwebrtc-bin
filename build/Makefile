@@ -16,6 +16,7 @@ help:
 	@echo " - USE_CCACHE=1"
 	@echo " - USE_H264=1"
 	@echo " - USE_X11=1"
+	@echo " - IS_DEBUG=0"
 	@echo ""
 	@echo "<packageName>:"
 	@for pkg in $(PACKAGE_NAMES); do echo " - $$pkg"; done

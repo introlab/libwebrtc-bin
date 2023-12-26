@@ -12,7 +12,7 @@ include ../common.mk
 EXTRA_GN_ARGS := \
 	target_os="$(TARGET_OS)" \
 	target_cpu="$(TARGET_CPU)" \
-	is_debug=false \
+	is_debug=$(IS_DEBUG) \
 	$(RTC_USE_H264) \
 	$(RTC_USE_X11) \
 	rtc_include_tests=false \
