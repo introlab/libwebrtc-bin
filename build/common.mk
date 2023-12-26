@@ -32,6 +32,12 @@ else
 RTC_USE_X11 := rtc_use_x11=false
 endif
 
+ifeq ($(IS_DEBUG),1)
+PACKAGE_NAME += -debug
+else
+PACKAGE_NAME += -release
+endif
+
 .PHONY: common-clean
 clean:
 	rm -rf $(PACKAGE_DIR)/*
