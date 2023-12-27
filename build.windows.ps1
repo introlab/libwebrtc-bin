@@ -148,7 +148,16 @@ Copy-Item "$BUILD_DIR\LICENSE.md" "$BUILD_DIR\package\webrtc\NOTICE"
 
 # x64用ライブラリコピー
 Copy-Item $BUILD_DIR\debug_x64\obj\webrtc.lib $BUILD_DIR\package\webrtc\debug\
+Copy-Item $BUILD_DIR\debug_x64\obj\third_party\boringssl\boringssl.lib $BUILD_DIR\package\webrtc\debug\
+New-Item $BUILD_DIR\package\webrtc\debug\boringssl_asm -ItemType Directory -Force
+Copy-Item $BUILD_DIR\debug_x64\obj\third_party\boringssl\boringssl_asm\*.obj $BUILD_DIR\package\webrtc\debug\boringssl_asm\
+Copy-Item $BUILD_DIR\debug_x64\obj\third_party\libyuv\libyuv_internal.lib $BUILD_DIR\package\webrtc\debug\
+
 Copy-Item $BUILD_DIR\release_x64\obj\webrtc.lib $BUILD_DIR\package\webrtc\release\
+Copy-Item $BUILD_DIR\release_x64\obj\third_party\boringssl\boringssl.lib $BUILD_DIR\package\webrtc\release\
+New-Item $BUILD_DIR\package\webrtc\release\boringssl_asm -ItemType Directory -Force
+Copy-Item $BUILD_DIR\release_x64\obj\third_party\boringssl\boringssl_asm\*.obj $BUILD_DIR\package\webrtc\release\boringssl_asm\
+Copy-Item $BUILD_DIR\release_x64\obj\third_party\libyuv\libyuv_internal.lib $BUILD_DIR\package\webrtc\release\
 
 # ファイルを圧縮する
 New-Item $PACKAGE_DIR -ItemType Directory -Force
@@ -164,7 +173,16 @@ Copy-Item "$BUILD_DIR\LICENSE.md" "$BUILD_DIR\package\webrtc\NOTICE"
 
 # x86用ファイル一式作成
 Copy-Item $BUILD_DIR\debug_x86\obj\webrtc.lib $BUILD_DIR\package\webrtc\debug\
+Copy-Item $BUILD_DIR\debug_x86\obj\third_party\boringssl\boringssl.lib $BUILD_DIR\package\webrtc\debug\
+New-Item $BUILD_DIR\package\webrtc\debug\boringssl_asm -ItemType Directory -Force
+Copy-Item $BUILD_DIR\debug_x86\obj\third_party\boringssl\boringssl_asm\*.obj $BUILD_DIR\package\webrtc\debug\boringssl_asm\
+Copy-Item $BUILD_DIR\debug_x86\obj\third_party\libyuv\libyuv_internal.lib $BUILD_DIR\package\webrtc\debug\
+
 Copy-Item $BUILD_DIR\release_x86\obj\webrtc.lib $BUILD_DIR\package\webrtc\release\
+Copy-Item $BUILD_DIR\release_x86\obj\third_party\boringssl\boringssl.lib $BUILD_DIR\package\webrtc\release\
+New-Item $BUILD_DIR\package\webrtc\release\boringssl_asm -ItemType Directory -Force
+Copy-Item $BUILD_DIR\release_x86\obj\third_party\boringssl\boringssl_asm\*.obj $BUILD_DIR\package\webrtc\release\boringssl_asm\
+Copy-Item $BUILD_DIR\release_x86\obj\third_party\libyuv\libyuv_internal.lib $BUILD_DIR\package\webrtc\release\
 
 # ファイルを圧縮する
 New-Item $PACKAGE_DIR -ItemType Directory -Force
